@@ -34,7 +34,8 @@ const Upload = () => {
 
         setStatusText('Preparing data...');
 
-        const uuid = generateUUID;
+        const uuid = generateUUID();
+
         const data = {
             id: uuid,
             resumePath: uploadedFile.path,
@@ -42,6 +43,7 @@ const Upload = () => {
             companyName, jobTitle, jobDescription,
             feedback: '',
         }
+
         await kv.set(`resume: ${uuid}`, JSON.stringify(data));
 
         setStatusText('Analyzing...');
@@ -55,6 +57,7 @@ const Upload = () => {
         await kv.set(`resume:${uuid}`, JSON.stringify(data));
         setStatusText('Analysis complete, redirecting...');
         console.log(data);
+        navigate(`/resume/${uuid}}`);
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
